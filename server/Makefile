@@ -5,8 +5,9 @@ IMAGE_NAME?=unshort
 
 generate:
 	@echo "Go get esc..."
+	@go get github.com/programmfabrik/esc
+	@echo "Go install esc"
 	@go install github.com/programmfabrik/esc
-	@echo "Got esc"
 	@echo "Generating assets..."
 	@go generate ./... && go generate ./db/db.go
 	@echo "Assets generated"
