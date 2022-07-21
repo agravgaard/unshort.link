@@ -18,7 +18,7 @@ RUN if [ "$TARGETARCH" = "arm64" ]; then \
     GOOS=linux GOARCH=$TARGETARCH $TARGETFLAG make build
 
 # final
-FROM docker.io/alpine
+FROM docker.io/debian:bullseye-slim
 COPY --from=build /src/unshort.link /src/unshort.link
 EXPOSE 8080
 ENTRYPOINT ["/src/unshort.link"]
