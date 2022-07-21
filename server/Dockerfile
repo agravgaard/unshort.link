@@ -5,7 +5,8 @@ ADD . /src
 WORKDIR /src
 
 ARG TARGETARCH
-RUN GOOS=linux GOARCH=$TARGETARCH make build
+RUN export PATH=${PATH}:`go env GOPATH`/bin \
+    GOOS=linux GOARCH=$TARGETARCH make build
 
 # final
 FROM docker.io/alpine
