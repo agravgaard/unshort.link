@@ -18,7 +18,7 @@ jobs:
         run: |
           cd server
           export PATH=${PATH}:`go env GOPATH`/bin
-          go generate ./...
+          make generate
       - name: Build
         run: |
           cd server
