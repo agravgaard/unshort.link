@@ -5,6 +5,7 @@ IMAGE_NAME?=unshort
 
 generate:
 	@echo "Go install esc"
+	@go get github.com/programmfabrik/esc
 	@go install github.com/programmfabrik/esc
 	@echo "Generating main assets..."
 	@esc -private -local-prefix-cwd -pkg=main -o=static.go static/
