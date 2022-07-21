@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: unshort
+  name: unshort
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: unshort
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: unshort
+    spec:
+      containers:
+        - image: ghcr.io/agravgaard/unshort.link/unshort:latest
+          name: unshort
+          ports:
+            - containerPort: 8080
+          resources: {}
