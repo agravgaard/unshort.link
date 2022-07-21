@@ -3,10 +3,13 @@ FROM --platform=$BUILDPLATFORM docker.io/golang:bullseye AS build
 RUN dpkg --add-architecture arm64 \
     && apt update -y \
     && apt install -y --no-install-recommends \
+        ca-certificates \
         curl \
         gcc \
         gcc-aarch64-linux-gnu \
-        libc6-dev-arm64-cross
+        libc6-dev-arm64-cross \
+    && update-ca-certificates
+
 ADD . /src
 WORKDIR /src
 
@@ -20,5 +23,6 @@ RUN if [ "$TARGETARCH" = "arm64" ]; then \
 # final
 FROM docker.io/debian:bullseye-slim
 COPY --from=build /src/unshort.link /src/unshort.link
+COPY --from=build /etc/ssl/certs /etc/ssl/certs
 EXPOSE 8080
 ENTRYPOINT ["/src/unshort.link"]
