@@ -4,6 +4,9 @@ on: [push, pull_request]
 jobs:
   buildx:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
     steps:
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
@@ -28,4 +31,4 @@ jobs:
       - name: docker build
         run: |
           cd server/
-          docker buildx build --platform "linux/amd64,linux/arm64" -t unshort --push .
+          docker buildx build --platform "linux/amd64,linux/arm64" -t ghcr.io/${{ github.repository }}/unshort:latest --push .
