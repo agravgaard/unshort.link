@@ -11,9 +11,7 @@ generate:
 	@echo "Generating main assets..."
 	@esc -private -local-prefix-cwd -pkg=main -o=static.go static/
 	@echo "Generating db assets..."
-	@cd ./db
-	@esc -private -local-prefix-cwd -pkg=db -o=static.go standard_hosts.txt
-	@cd ..
+	@cd ./db && esc -private -local-prefix-cwd -pkg=db -o=static.go standard_hosts.txt
 	@echo "Assets generated"
 
 build: generate test
