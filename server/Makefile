@@ -4,8 +4,6 @@ IMAGE_NAME?=unshort
 .PHONY: generate build dockerize
 
 generate:
-	@echo "Go get esc..."
-	@go get github.com/programmfabrik/esc
 	@echo "Go install esc"
 	@go install github.com/programmfabrik/esc
 	@echo "Generating main assets..."

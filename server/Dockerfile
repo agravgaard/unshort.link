@@ -5,7 +5,8 @@ ADD . /src
 WORKDIR /src
 
 ARG TARGETARCH
-RUN export PATH=${PATH}:`go env GOPATH`/bin \
+RUN export PATH=${PATH}:$(go env GOPATH)/bin \
+    && echo $PATH \
     && GOOS=linux GOARCH=$TARGETARCH make build
 
 # final
