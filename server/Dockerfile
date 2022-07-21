@@ -1,9 +1,11 @@
 # build
-FROM docker.io/golang:alpine AS build
+FROM --platform=$BUILDPLATFORM docker.io/golang:alpine AS build
 RUN apk --no-cache add curl build-base gcc
 ADD . /src
 WORKDIR /src
-RUN make build
+
+ARG TARGETARCH
+RUN GOOS=linux GOARCH=$TARGETARCH make build
 
 # final
 FROM docker.io/alpine
