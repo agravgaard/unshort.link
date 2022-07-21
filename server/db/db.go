@@ -4,18 +4,16 @@ import (
 	"bufio"
 	"bytes"
 	"database/sql/driver"
-	"github.com/jmoiron/sqlx"
-	_ "github.com/mattn/go-sqlite3"
-	"github.com/pkg/errors"
-	"github.com/sirupsen/logrus"
 	"log"
 	"net/url"
 	"os"
 	"strings"
-)
 
-//go:generate go get -u github.com/programmfabrik/esc
-//go:generate esc -private -local-prefix-cwd -pkg=db -o=static.go standard_hosts.txt
+	"github.com/jmoiron/sqlx"
+	_ "github.com/mattn/go-sqlite3"
+	"github.com/pkg/errors"
+	"github.com/sirupsen/logrus"
+)
 
 var db *sqlx.DB
 var providerBlacklist []string

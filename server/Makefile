@@ -8,8 +8,12 @@ generate:
 	@go get github.com/programmfabrik/esc
 	@echo "Go install esc"
 	@go install github.com/programmfabrik/esc
-	@echo "Generating assets..."
-	@go generate ./... && go generate ./db/db.go
+	@echo "Generating main assets..."
+	@esc -private -local-prefix-cwd -pkg=main -o=static.go static/
+	@echo "Generating db assets..."
+	@cd ./db
+	@esc -private -local-prefix-cwd -pkg=db -o=static.go standard_hosts.txt
+	@cd ..
 	@echo "Assets generated"
 
 build: generate test

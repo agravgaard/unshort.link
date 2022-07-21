@@ -3,16 +3,14 @@ package main
 import (
 	"database/sql"
 	"flag"
-	_ "github.com/mattn/go-sqlite3"
-	log "github.com/sirupsen/logrus"
 	"net/http"
 	"strings"
 	"time"
+
+	_ "github.com/mattn/go-sqlite3"
+	log "github.com/sirupsen/logrus"
 	"unshort.link/blacklist"
 )
-
-//go:generate go get -u github.com/programmfabrik/esc
-//go:generate esc -private -local-prefix-cwd -pkg=main -o=static.go static/
 
 var serveUrl, port, supportUrl string
 var useLocal bool

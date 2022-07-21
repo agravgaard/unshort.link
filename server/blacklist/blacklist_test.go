@@ -10,7 +10,6 @@ import (
 	"time"
 )
 
-
 type MockRepo struct {
 	deletedCalls []time.Time
 	addedHosts   []hostEntry
@@ -24,12 +23,11 @@ type hostEntry struct {
 func (m *MockRepo) deleteEntriesBefore(limit time.Time) {
 	m.deletedCalls = append(m.deletedCalls, limit)
 }
-func (m *MockRepo)  addBatchToDB(hosts []string, ts time.Time) {
+func (m *MockRepo) addBatchToDB(hosts []string, ts time.Time) {
 	for _, host := range hosts {
-		m.addedHosts = append(m.addedHosts, hostEntry{host,ts,})
+		m.addedHosts = append(m.addedHosts, hostEntry{host, ts})
 	}
 }
-
 
 func Test_Loader(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -41,7 +39,7 @@ func Test_Loader(t *testing.T) {
 	loader.load(reloadTs)
 
 	assert.Len(t, repo.deletedCalls, 1)
-	assert.Equal(t, repo.deletedCalls[0], reloadTs )
+	assert.Equal(t, repo.deletedCalls[0], reloadTs)
 
 	assert.Len(t, repo.addedHosts, 2)
 	assert.Contains(t, repo.addedHosts, hostEntry{"Hello", reloadTs})
