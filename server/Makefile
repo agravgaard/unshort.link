@@ -6,24 +6,24 @@ IMAGE_NAME?=unshort
 generate:
 	@echo "Go install esc"
 	@go get github.com/programmfabrik/esc
-	@go install github.com/programmfabrik/esc
+	@GOARCH=$(go env GOHOSTARCH) go install github.com/programmfabrik/esc
 	@echo "Generating main assets..."
 	@esc -private -local-prefix-cwd -pkg=main -o=static.go static/
 	@echo "Generating db assets..."
 	@cd ./db && esc -private -local-prefix-cwd -pkg=db -o=static.go standard_hosts.txt
 	@echo "Assets generated"
 
-build: generate test
+build: generate
 	@echo "Building..."
-	@go build -o unshort.link
+	@CGO_ENABLED=1 go build -o unshort.link
 	@echo "Build completed. Run the server by ./unshort.link"
 
 test:
 	@echo "Running tests...."
-	@go test ./...
+	@CGO_ENABLED=1 go test ./...
 	@echo "Finished tests"
 	@echo "Running vet..."
-	@go vet ./...
+	@CGO_ENABLED=1 go vet ./...
 	@echo "Finished vet"
 
 clean:
