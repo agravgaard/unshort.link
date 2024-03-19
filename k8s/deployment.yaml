@@ -4,6 +4,7 @@ kind: Deployment
 metadata:
   labels:
     app: unshort
+    version: 1.0.0
   name: unshort
 spec:
   replicas: 1
@@ -15,6 +16,7 @@ spec:
     metadata:
       labels:
         app: unshort
+        version: 1.0.0
     spec:
       containers:
         - image: ghcr.io/agravgaard/unshort.link/unshort:latest
