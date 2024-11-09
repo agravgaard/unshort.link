@@ -22,7 +22,8 @@ RUN if [ "$TARGETARCH" = "arm64" ]; then \
 
 # final
 FROM docker.io/debian:bullseye-slim
-COPY --from=build /src/unshort.link /src/unshort.link
+USER nobody
+COPY --from=build --chown=nobody:nobody /src/unshort.link /src/unshort.link
 COPY --from=build /etc/ssl/certs /etc/ssl/certs
 EXPOSE 8080
 ENTRYPOINT ["/src/unshort.link"]
