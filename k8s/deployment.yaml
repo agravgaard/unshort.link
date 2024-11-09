@@ -23,4 +23,15 @@ spec:
           name: unshort
           ports:
             - containerPort: 8080
-          resources: {}
+          securityContext:
+            runAsUser: 65534
+            runAsGroup: 65534
+            capabilities:
+              drop:
+                - "ALL"
+            readOnlyRootFilesystem: true
+      securityContext:
+        allowPrivilegeEscalation: false
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
