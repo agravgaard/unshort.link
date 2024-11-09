@@ -175,7 +175,7 @@ func removeKnownBadParams(set []string) []string {
 	return cleaned
 }
 
-//combinations is based on https://github.com/mxschmitt/golang-combinations/blob/master/combinations.go
+// combinations is based on https://github.com/mxschmitt/golang-combinations/blob/master/combinations.go
 func combinations(set []string) (subsets subsets) {
 	length := uint(len(set))
 
