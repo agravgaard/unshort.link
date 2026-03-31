@@ -8,7 +8,6 @@ import (
 	"github.com/sirupsen/logrus"
 	"golang.org/x/net/publicsuffix"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/http/cookiejar"
 	"net/url"
@@ -110,7 +109,7 @@ func getUrl(inUrl *url.URL) (*db.UnShortUrl, error) {
 				return
 			}
 
-			tmpBody, err := ioutil.ReadAll(tmpResp.Body)
+			tmpBody, err := io.ReadAll(tmpResp.Body)
 			if err != nil {
 				logrus.Error(errors.Wrapf(err, "Could not read tmp body for url '%s'", tmpUrl.String()))
 				return
