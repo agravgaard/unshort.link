@@ -1,5 +1,5 @@
 # build
-FROM --platform=$BUILDPLATFORM docker.io/golang:bullseye AS build
+FROM --platform=$BUILDPLATFORM docker.io/golang:1.26-trixie AS build
 RUN dpkg --add-architecture arm64 \
     && apt update -y \
     && apt install -y --no-install-recommends \
@@ -21,7 +21,7 @@ RUN if [ "$TARGETARCH" = "arm64" ]; then \
     GOOS=linux GOARCH=$TARGETARCH $TARGETFLAG make build
 
 # final
-FROM docker.io/debian:bullseye-slim
+FROM docker.io/debian:trixie-slim
 USER nobody
 WORKDIR /workdir
 COPY --from=build --chown=nobody:nobody /src/unshort.link /workdir/unshort.link
