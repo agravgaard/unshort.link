@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"embed"
 	"flag"
 	"net/http"
 	"strings"
@@ -12,13 +13,14 @@ import (
 	"unshort.link/blacklist"
 )
 
+//go:embed static/*
+var staticFiles embed.FS
+
 var serveUrl, port, supportUrl string
-var useLocal bool
 var blacklistSyncInterval time.Duration
 var blacklistUrls []string
 
 func init() {
-	flag.BoolVar(&useLocal, "local", false, "Use assets from local filesystem")
 	flag.StringVar(&serveUrl, "url", "http://localhost:8080", "The server url this server runs on. (Required for the frontend)")
 	flag.StringVar(&port, "port", "8080", "Port to run the server on")
 	flag.StringVar(&supportUrl, "support-url", "", "Url to display in support notice")
@@ -71,10 +73,10 @@ func main() {
 		}
 	}
 
-	http.Handle("/static/", http.FileServer(_escFS(useLocal)))
+	http.Handle("/static/", http.FileServer(http.FS(staticFiles)))
 	http.HandleFunc("/", handler)
 
-	log.Infof("Run server on port '%s', with url '%s' and local assets is set to '%t'", port, serveUrl, useLocal)
+	log.Infof("Run server on port '%s', with url '%s'", port, serveUrl)
 
 	log.Fatal(http.ListenAndServe(":"+port, nil))
 }

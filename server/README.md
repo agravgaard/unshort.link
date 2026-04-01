@@ -1,8 +1,6 @@
 # Unshort.link Server
 
-[💵 Please consider supporting this project to keep it up and running 💵](https://gum.co/unshortlink)
-
-This is the backend service running [unshort.link](https://unshort.link). You can build & run it yourself for even better privacy
+This is the backend service running [unshort.link](https://unshort.cyberbunny.cyou). You can build & run it yourself for even better privacy
 
 ## Building
 
@@ -10,13 +8,11 @@ For using up unshort.link on your own server you need a [working golang installa
 
 ### 1) Generating assets
 
-The assets (html, css, js,...) are directly build into the binary for more portability and an easier usage. You need to 
-generate that code by entering `go generate ./...` in the main folder of the project.
+The assets (html, css, js,...) are directly build into the binary with [embed](https://pkg.go.dev/embed) for more portability and an easier usage.
 
 ### 2) Building
-   
-Building the project works with `go build` in the main folder of the project. (Please keep in mind that you need to generate
-the assets first)
+
+Building the project works with `go build` in the main folder of the project.
 
 ## Or using Make
 
@@ -49,25 +45,26 @@ be up and running
 
 - `--url`: Set the url of the server you are running on (this is only required for the frontend) (Default: `http://localhost:8080`)
 - `--port`: Port to start the server on (Default: `8080`)
-- `--local`: Use the assets (frontend & blacklist) directly from the filesystem instead of the internal binary storage. This helps during the development of the frontend as you do not have to do `go generate ./...` after every change. This should not be used in production. (Default: `false`)
 - `--blacklist-sources`:  Comma separated list of blacklist urls to periodically sync. The blacklist should be a list of newline separated domains (Default https://hosts.ubuntu101.co.za/domains.list)
 - `--sync`: Blacklist synchronization interval. The format is a number and a unit. For example `30m` or `1.5h`, available units are `"s", "m", "h"`. Mixed values are also possible: `XhXmXs` (Default: one hour)
 - `--support-url`: Url where the users of your unshort.link server can financially support you (e.g. paypal/patreon)
+
 ## Development
+
 ### How to run the unit tests
+
 Just run `go test ./...` from the command line.
 
 Or use `make test` command
 
 ### How to clean generated files and db
+
 Just run `make clean` from the command line.
 
 ## Blacklists
 
 Following blacklists are supported by unshort.link (and all others with the same format: `One url per line` and `# at position 0 for marking comments`)
+
 - Ultimate Hosts Blacklist: [Data](https://hosts.ubuntu101.co.za/domains.list) ([Info](https://github.com/mitchellkrogza/Ultimate.Hosts.Blacklist))
 - URLhaus: [Data](https://urlhaus.abuse.ch/downloads/text_online/) ([Info](https://urlhaus.abuse.ch/))
 - DShield.org Suspicious Domain List: [Data](https://www.dshield.org/feeds/suspiciousdomains_Low.txt) ([Info](https://dshield.org/suspicious_domains.html))
-
-
-

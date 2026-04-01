@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	_ "embed"
 	"encoding/json"
 	"fmt"
 	"github.com/pkg/errors"
@@ -13,6 +14,27 @@ import (
 	"strings"
 	"unshort.link/db"
 )
+
+//go:embed static/about.html
+var aboutHtml []byte
+
+//go:embed static/main.html
+var mainHtml []byte
+
+//go:embed static/index.html
+var indexHtml []byte
+
+//go:embed static/blacklist.html
+var blacklistHtml []byte
+
+//go:embed static/error.html
+var errorHtml []byte
+
+//go:embed static/show.html
+var showHtml []byte
+
+//go:embed static/loading.html
+var loadingHtml []byte
 
 var schemeReplacer *strings.Replacer
 
@@ -40,8 +62,8 @@ func handleAbout(rw http.ResponseWriter, browserExtension bool) {
 	renderLoading(rw)
 	err := renderTemplate(rw,
 		append(
-			_escFSMustByte(useLocal, "/static/about.html"),
-			_escFSMustByte(useLocal, "/static/main.html")...,
+			aboutHtml,
+			mainHtml...,
 		),
 		TemplateVars{ServerUrl: serveUrl, BrowserExtension: browserExtension},
 	)
@@ -65,8 +87,8 @@ func handleIndex(rw http.ResponseWriter, renderLoadingHTML bool) {
 
 	err = renderTemplate(rw,
 		append(
-			_escFSMustByte(useLocal, "/static/index.html"),
-			_escFSMustByte(useLocal, "/static/main.html")...,
+			indexHtml,
+			mainHtml...,
 		),
 		TemplateVars{ServerUrl: serveUrl, LinkCount: linkCount},
 	)
@@ -83,8 +105,8 @@ func handleShowRedirectPage(rw http.ResponseWriter, u *db.UnShortUrl, renderLoad
 
 	err := renderTemplate(rw,
 		append(
-			_escFSMustByte(useLocal, "/static/show.html"),
-			_escFSMustByte(useLocal, "/static/main.html")...,
+			showHtml,
+			mainHtml...,
 		),
 		TemplateVars{DirectRedirect: directRedirect,
 			LongUrl:      u.LongUrl.String(),
@@ -104,8 +126,8 @@ func handleShowBlacklistPage(rw http.ResponseWriter, url *db.UnShortUrl, renderL
 
 	err := renderTemplate(rw,
 		append(
-			_escFSMustByte(useLocal, "/static/blacklist.html"),
-			_escFSMustByte(useLocal, "/static/main.html")...,
+			blacklistHtml,
+			mainHtml...,
 		),
 		TemplateVars{LongUrl: url.LongUrl.String(), ShortUrl: url.ShortUrl.String()},
 	)
@@ -116,7 +138,7 @@ func handleShowBlacklistPage(rw http.ResponseWriter, url *db.UnShortUrl, renderL
 }
 
 func renderLoading(rw http.ResponseWriter) {
-	_, _ = io.Copy(rw, bytes.NewReader(_escFSMustByte(useLocal, "/static/loading.html")))
+	_, _ = io.Copy(rw, bytes.NewReader(loadingHtml))
 	if f, ok := rw.(http.Flusher); ok {
 		f.Flush()
 	}
@@ -134,8 +156,8 @@ func handleError(rw http.ResponseWriter, err error, renderLoadingHTML bool) {
 
 	nErr := renderTemplate(rw,
 		append(
-			_escFSMustByte(useLocal, "/static/error.html"),
-			_escFSMustByte(useLocal, "/static/main.html")...,
+			errorHtml,
+			mainHtml...,
 		),
 		TemplateVars{Error: err.Error()},
 	)

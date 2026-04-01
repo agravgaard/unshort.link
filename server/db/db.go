@@ -3,6 +3,7 @@ package db
 import (
 	"bufio"
 	"bytes"
+	_ "embed"
 	"database/sql/driver"
 	"log"
 	"net/url"
@@ -14,6 +15,9 @@ import (
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
+
+//go:embed standard_hosts.txt
+var standardHosts []byte
 
 var db *sqlx.DB
 var providerBlacklist []string
@@ -50,7 +54,7 @@ CREATE TABLE IF NOT EXISTS hosts (
 	}
 
 	// Load std providers into db
-	s := bufio.NewScanner(bytes.NewReader(_escFSMustByte(false, "/standard_hosts.txt")))
+	s := bufio.NewScanner(bytes.NewReader(standardHosts))
 	for s.Scan() {
 		err = AddHost(strings.ToLower(s.Text()))
 		if err != nil {
