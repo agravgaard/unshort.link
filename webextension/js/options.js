@@ -14,7 +14,7 @@ function saveOptions(e) {
 
 function restoreOptions() {
     function setData(result) {
-        serverUrl.value = result.serverUrl || "https://unshort.link";
+        serverUrl.value = result.serverUrl || "https://unshort.cyberbunny.cyou";
         directRedirect.checked = result.directRedirect || false;
         doNotCheckBlacklist.checked = result.doNotCheckBlacklist || false;
     }

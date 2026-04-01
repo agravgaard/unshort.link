@@ -7,7 +7,7 @@ var tabIdUrls = {}
 // Load options via async storage API
 var loadOptions = new Promise((resolve) => {
     function setData(result) {
-        unshortBaseURL = result.serverUrl || "https://unshort.link";
+        unshortBaseURL = result.serverUrl || "https://unshort.cyberbunny.cyou";
         directRedirect = result.directRedirect || false;
         doNotCheckBlacklist = result.doNotCheckBlacklist || false;
         resolve();
