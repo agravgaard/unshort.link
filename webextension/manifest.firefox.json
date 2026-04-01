@@ -2,10 +2,10 @@
     "description": "Prevent short link services from tracking you",
     "manifest_version": 2,
     "name": "Unshort.link - Free Link unshorten services",
-    "version": "1.5.5",
+    "version": "2.0.0",
     "permissions": ["webRequest", "webRequestBlocking", "<all_urls>", "storage"],
 
-    "author": "Simon Frey",
+    "author": "Andreas G. Andersen",
     "options_ui": {
         "page": "options.html"
     },
@@ -25,7 +25,7 @@
         "128": "icons/128.png"
     },
 
-    "homepage_url": "https://github.com/simonfrey/unshort.link",
+    "homepage_url": "https://github.com/agravgaard/unshort.link",
 
     "background": {
         "scripts": ["js/background.js"]
